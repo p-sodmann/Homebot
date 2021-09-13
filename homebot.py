@@ -3,7 +3,7 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters, CallbackContext
 from telegram import ParseMode, Bot
 from telegram import Update
-from api_token import token
+from api_token import TOKEN
 import schedule
 
 import logging
@@ -16,7 +16,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 
 updater = Updater(
-    token=token, 
+    token=TOKEN, 
     use_context=True, 
     request_kwargs={'read_timeout': 6, 'connect_timeout': 7}
 )
@@ -38,7 +38,7 @@ def start(update, context):
     context.job_queue.run_repeating(scrape, interval=60*10, first=5, context=context)
 
 def scrape(callback: CallbackContext):
-    print(f"scraping for {callback.job.context.user_data['chat_ id']}")
+    print(f"scraping for {callback.job.context.user_data['chat_id']}")
 
     new_immos = []
     for parser in parsers:
